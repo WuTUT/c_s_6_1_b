@@ -13,7 +13,9 @@ public class Palindrome {
         }
         char a = d.removeFirst();
         char b = d.removeLast();
-        if (a != b) return false;
+        if (a != b) {
+            return false;
+        }
         return helperIsPalindrome(d);
     }
 
@@ -32,13 +34,16 @@ public class Palindrome {
         }
         char a = d.removeFirst();
         char b = d.removeLast();
-        if (!cc.equalChars(a, b)) return false;
+        if (!cc.equalChars(a, b)) {
+            return false;
+        }
         return helperIsPalindrome(d, cc);
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc) {
-        if (word.length() == 0 || word.length() == 1)
+        if (word.length() == 0 || word.length() == 1) {
             return true;
+        }
         Deque<Character> d = wordToDeque(word);
         return helperIsPalindrome(d, cc);
     }

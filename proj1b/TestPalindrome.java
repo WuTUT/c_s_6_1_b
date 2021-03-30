@@ -18,7 +18,7 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindrome(){
+    public void testIsPalindrome() {
         assertFalse(palindrome.isPalindrome("car"));
         assertTrue(palindrome.isPalindrome("adda"));
         assertTrue(palindrome.isPalindrome("aba"));
@@ -27,9 +27,9 @@ public class TestPalindrome {
     }
 
     @Test
-    public void testIsPalindrome2(){
-        assertTrue(palindrome.isPalindrome("abb",offByOne));
-        assertTrue(palindrome.isPalindrome("aabb",offByOne));
-        assertTrue(palindrome.isPalindrome("aacc",offByN));
+    public void testIsPalindrome2() {
+        assertTrue(palindrome.isPalindrome("abb", offByOne));
+        assertTrue(palindrome.isPalindrome("aabb", offByOne));
+        assertTrue(palindrome.isPalindrome("aacc", offByN));
     }
 }

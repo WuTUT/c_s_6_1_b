@@ -1,15 +1,15 @@
 public class LinkedListDeque<T> implements Deque<T> {
-    public static class QueueNode<T> {
+    private class QueueNode<T> {
         T value;
         QueueNode prev;
         QueueNode next;
 
-        public QueueNode() {
+        private QueueNode() {
             prev = null;
             next = null;
         }
 
-        public QueueNode(T item) {
+        private QueueNode(T item) {
             prev = null;
             next = null;
             value = item;
@@ -26,12 +26,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         size = 0;
     }
 
-    public LinkedListDeque(LinkedListDeque other) {
-        this.size = other.size();
-        for (int i = 0; i < this.size; i++) {
-
-        }
-    }
 
     @Override
     public void addFirst(T item) {
@@ -123,10 +117,10 @@ public class LinkedListDeque<T> implements Deque<T> {
         if (index == 0) {
             return (T) p.value;
         }
-        return getRecursive(p.next, index - 1);
+        return (T) getRecursive(p.next, index - 1);
     }
 
     public T getRecursive(int index) {
-        return getRecursive(sentinel.next, index);
+        return (T) getRecursive(sentinel.next, index);
     }
 }
