@@ -1,4 +1,4 @@
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> {
     private int tail;
     private int head;
     private T[] items;
@@ -13,82 +13,96 @@ public class ArrayDeque<T> implements Deque<T> {
 
     }
 
-    @Override
     public T get(int index) {
         return (T) items[(index + head + 1) % items.length];
     }
 
-    @Override
     public int size() {
         return (tail + items.length - head - 1) % items.length;
     }
 
     private void resize(int capacity) {
         T[] a = (T[]) new Object[capacity];
-        if (tail > head) {
-            System.arraycopy(items, addOne(head), a, 0, size());
+        int prevSize = size();
+        int copyStart = addOne(head);
+        if (head == tail) {
+            System.arraycopy(items, copyStart, a, 0, items.length - copyStart);
+            System.arraycopy(items, 0, a, items.length - copyStart, copyStart - 1);
+        } else if (head < tail) {
+            System.arraycopy(items, copyStart, a, 0, prevSize);
         } else {
-            System.arraycopy(items, addOne(head), a, 0, items.length - head - 1);
-            // if(minusOne(tail)<items.length)
-            // System.arraycopy(items,minusOne(tail),a,items.length-head);
+            int len = (items.length - copyStart) % items.length;
+            System.arraycopy(items, copyStart, a, 0, len);
+            System.arraycopy(items, 0, a, len, prevSize - len);
         }
         items = a;
+        head = minusOne(0);
+        tail = prevSize;
     }
 
-    @Override
     public boolean isEmpty() {
-        if (head < tail && (tail - head == 1)) {
+        if (size() == 0) {
             return true;
         }
         return false;
     }
 
-    private int minusOne(int head) {
-        head--;
-        if (head == -1) {
-            head = items.length - 1;
+    private int minusOne(int val) {
+        val--;
+        if (val == -1) {
+            val = items.length - 1;
         }
-        return head;
+        return val;
     }
 
-    private int addOne(int tail) {
-        tail++;
-        if (tail == items.length) {
-            tail = 0;
+    private int addOne(int val) {
+        val++;
+        if (val == items.length) {
+            val = 0;
         }
-        return tail;
+        return val;
     }
 
-    @Override
     public void printDeque() {
         for (int i = addOne(head); i != tail; i = addOne(i)) {
-            System.out.println(items[i].toString() + " ");
+            System.out.print(items[i].toString() + " ");
         }
+        System.out.println();
     }
 
-    @Override
     public void addFirst(T item) {
+        if (head == tail) {
+            resize(size() * 2);
+        }
         items[head] = item;
         head = minusOne(head);
     }
 
-    @Override
     public void addLast(T item) {
+        if (head == tail) {
+            resize(size() * 2);
+        }
         items[tail] = item;
         tail = addOne(tail);
     }
 
-    @Override
     public T removeFirst() {
         head = addOne(head);
         T ret = items[head];
+        int size = size();
+        if (items.length >= 16 && (double) size / items.length < 0.25) {
+            resize(size * 2);
+        }
         return ret;
     }
 
-    @Override
     public T removeLast() {
         tail = minusOne(tail);
         T ret = items[tail];
+        int size = size();
+        if (items.length >= 16 && (double) size / items.length < 0.25) {
+            resize(size * 2);
+        }
         return ret;
     }
 }
