@@ -1,5 +1,4 @@
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
@@ -65,12 +64,13 @@ public class ArrayDequeTest {
 
     @Test
     public void testResize2() {
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 405; i++) {
             arrayDeque.addFirst(i);
         }
-        for (int i = 0; i < 35; i++) {
+        for (int i = 0; i < 405; i++) {
             arrayDeque.removeLast();
         }
         arrayDeque.printDeque();
     }
+
 }

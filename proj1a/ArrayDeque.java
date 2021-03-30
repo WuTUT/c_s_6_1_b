@@ -9,10 +9,6 @@ public class ArrayDeque<T> {
         items = (T[]) new Object[8];
     }
 
-    public ArrayDeque(ArrayDeque other) {
-
-    }
-
     public T get(int index) {
         return (T) items[(index + head + 1) % items.length];
     }
@@ -26,8 +22,9 @@ public class ArrayDeque<T> {
         int prevSize = size();
         int copyStart = addOne(head);
         if (head == tail) {
-            System.arraycopy(items, copyStart, a, 0, items.length - copyStart);
-            System.arraycopy(items, 0, a, items.length - copyStart, copyStart - 1);
+            int len = (items.length - copyStart) % items.length;
+            System.arraycopy(items, copyStart, a, 0, len);
+            System.arraycopy(items, 0, a, len, prevSize - len);
         } else if (head < tail) {
             System.arraycopy(items, copyStart, a, 0, prevSize);
         } else {
@@ -87,6 +84,10 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
+
         head = addOne(head);
         T ret = items[head];
         int size = size();
@@ -97,6 +98,9 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
         tail = minusOne(tail);
         T ret = items[tail];
         int size = size();

@@ -1,15 +1,15 @@
 public class LinkedListDeque<T> {
-    public static class QueueNode<T> {
+    private class QueueNode<T> {
         T value;
         QueueNode prev;
         QueueNode next;
 
-        public QueueNode() {
+        private QueueNode() {
             prev = null;
             next = null;
         }
 
-        public QueueNode(T item) {
+        private QueueNode(T item) {
             prev = null;
             next = null;
             value = item;
@@ -25,11 +25,6 @@ public class LinkedListDeque<T> {
         sentinel.prev = sentinel;
         size = 0;
     }
-
-    public LinkedListDeque(LinkedListDeque other) {
-        this.size = other.size();
-    }
-
 
     public void addFirst(T item) {
         QueueNode firstNode = sentinel.next;
@@ -75,6 +70,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
+        if (isEmpty()) {
+            return null;
+        }
         QueueNode firstNode = sentinel.next;
         QueueNode nextNode = firstNode.next;
 
@@ -87,6 +85,9 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
+        if (isEmpty()) {
+            return null;
+        }
         QueueNode lastNode = sentinel.prev;
         QueueNode lastLastNode = lastNode.prev;
 
@@ -113,10 +114,10 @@ public class LinkedListDeque<T> {
         if (index == 0) {
             return (T) p.value;
         }
-        return getRecursive(p.next, index - 1);
+        return (T) getRecursive(p.next, index - 1);
     }
 
     public T getRecursive(int index) {
-        return getRecursive(sentinel.next, index);
+        return (T) getRecursive(sentinel.next, index);
     }
 }
