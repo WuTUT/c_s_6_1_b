@@ -6,7 +6,7 @@ public class OffByN implements CharacterComparator {
      * @param x
      * @param y
      */
-    int n;
+    private int n;
 
     public OffByN(int nn) {
         n = nn;
