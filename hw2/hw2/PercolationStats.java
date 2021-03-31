@@ -24,10 +24,10 @@ public class PercolationStats {
             int count = 0;
             while (!percolation.percolates()) {
                 int row, col;
-                do {
-                    row = StdRandom.uniform(N);
-                    col = StdRandom.uniform(N);
-                } while (!percolation.isOpen(row, col));
+                //do {
+                row = StdRandom.uniform(N);
+                col = StdRandom.uniform(N);
+                //} while (!percolation.isOpen(row, col));
                 percolation.open(row, col);
                 count++;
             }
