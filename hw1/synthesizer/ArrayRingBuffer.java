@@ -20,23 +20,6 @@ public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
         first = 0;
         last = 0;
     }
-    /**
-     * return the queue is empty
-     *
-     * @return
-     */
-    public boolean isEmpty() {
-        return fillCount == 0;
-    }
-
-    /**
-     * return the queue is full
-     *
-     * @return
-     */
-    public boolean isFull() {
-        return fillCount == capacity;
-    }
 
     /**
      * Adds x to the end of the ring buffer. If there is no room, then
