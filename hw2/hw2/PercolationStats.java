@@ -24,15 +24,17 @@ public class PercolationStats {
             int count = 0;
             while (!percolation.percolates()) {
                 int row, col;
+                int index = StdRandom.uniform(N * N);
                 //do {
-                row = StdRandom.uniform(N);
-                col = StdRandom.uniform(N);
+                row = index / N;
+                col = index % N;
                 //} while (!percolation.isOpen(row, col));
                 percolation.open(row, col);
                 count++;
             }
-            sumX += count;
-            sumX2 += count * count;
+            double thereHold = (double) count / (double) (N * N);
+            sumX += thereHold;
+            sumX2 += thereHold * thereHold;
         }
     }
 
