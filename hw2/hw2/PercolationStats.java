@@ -1,6 +1,7 @@
 package hw2;
 
 import edu.princeton.cs.introcs.StdRandom;
+import edu.princeton.cs.introcs.StdStats;
 
 public class PercolationStats {
     /**
@@ -10,15 +11,17 @@ public class PercolationStats {
      * @param T
      * @param pf
      */
-    private double sumX = 0;
-    private double sumX2 = 0;
+    private double u;
+    private double sigma;
     private int examT;
+    private double[] sumX;
 
     public PercolationStats(int N, int T, PercolationFactory pf) {
         if (N <= 0 || T <= 0) {
             throw new IllegalArgumentException();
         }
-        examT = T;
+        this.examT = T;
+        this.sumX = new double[T];
         for (int i = 0; i < T; i++) {
             Percolation percolation = pf.make(N);
             int count = 0;
@@ -33,13 +36,13 @@ public class PercolationStats {
                 count++;
             }
             double thereHold = (double) count / (double) (N * N);
-            sumX += thereHold;
-            sumX2 += thereHold * thereHold;
+            sumX[i] = thereHold;
         }
     }
 
     public double mean() {
-        return sumX / examT;
+        u = StdStats.mean(this.sumX);
+        return u;
     }
 
     /**
@@ -48,8 +51,9 @@ public class PercolationStats {
      * @return
      */
     public double stddev() {
-        double total = sumX2 - 2 * mean() * sumX + examT * mean() * mean();
-        return Math.sqrt(total / (examT - 1));
+
+        sigma = StdStats.stddev(sumX);
+        return sigma;
     }
 
     /**
@@ -58,7 +62,7 @@ public class PercolationStats {
      * @return
      */
     public double confidenceLow() {
-        return mean() - 1.96 * stddev() / Math.sqrt(examT);
+        return u - 1.96 * sigma / Math.sqrt(examT);
     }
 
     /**
@@ -67,6 +71,7 @@ public class PercolationStats {
      * @return
      */
     public double confidenceHigh() {
-        return mean() + 1.96 * stddev() / Math.sqrt(examT);
+        return u + 1.96 * sigma / Math.sqrt(examT);
     }
+
 }
