@@ -11,8 +11,6 @@ public class PercolationStats {
      * @param T
      * @param pf
      */
-    private double u;
-    private double sigma;
     private int examT;
     private double[] sumX;
 
@@ -43,8 +41,7 @@ public class PercolationStats {
     }
 
     public double mean() {
-        u = StdStats.mean(this.sumX);
-        return u;
+        return StdStats.mean(sumX);
     }
 
     /**
@@ -53,9 +50,8 @@ public class PercolationStats {
      * @return
      */
     public double stddev() {
+        return StdStats.stddev(sumX);
 
-        sigma = StdStats.stddev(sumX);
-        return sigma;
     }
 
     /**
@@ -64,7 +60,7 @@ public class PercolationStats {
      * @return
      */
     public double confidenceLow() {
-        return u - 1.96 * sigma / Math.sqrt(examT);
+        return mean() - 1.96 * stddev() / Math.sqrt(examT);
     }
 
     /**
@@ -73,7 +69,7 @@ public class PercolationStats {
      * @return
      */
     public double confidenceHigh() {
-        return u + 1.96 * sigma / Math.sqrt(examT);
+        return mean() + 1.96 * stddev() / Math.sqrt(examT);
     }
 
 }
